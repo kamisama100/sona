@@ -1,0 +1,133 @@
+.table-container {
+  height: 100%;
+  border-radius: 0.5rem;
+  background-color: white;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+table {
+  width: 100%;
+  height: auto;
+  background-color: white;
+  border-collapse: collapse;
+  overflow: auto;
+}
+
+table thead > tr {
+  display: flex;
+}
+table thead > tr:first-child {
+  justify-content: space-between;
+  align-items: center;
+}
+
+table thead tr:first-child th:first-child,
+table thead tr:first-child th:last-child {
+  padding: 1.25rem 1.5rem;
+}
+
+table thead tr:first-child th:first-child {
+  text-align: left;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.75rem;
+}
+table thead tr:first-child th:last-child div {
+  text-align: right;
+}
+
+table thead tr:last-child th {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--gray-50);
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
+  width: 20%;
+  text-align: left;
+  color: var(--gray-500);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.125rem;
+}
+
+table tbody {
+  display: block;
+  overflow-y: auto;
+  height: 68.5vh;
+}
+table tbody tr {
+  display: flex;
+}
+
+table tbody tr td {
+  padding: 1rem 1.5rem;
+  color: var(--primary-color);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-bottom: 1px solid var(--gray-200);
+  width: 20%;
+  max-width: 20%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pagination {
+  display: flex;
+  padding: 0 1rem;
+  min-height: 4.25rem;
+  max-height: 4.25rem;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--gray-200);
+}
+
+.pagination > div {
+  display: flex;
+  flex-direction: row;
+  gap: 0.14rem;
+}
+
+.pagination > div button {
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: var(--gray-500);
+}
+
+.dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0.25rem;
+  padding: 0 0.75rem;
+  border: 1px solid #c2c5ce;
+  box-shadow: 0px 1px 0px 0px rgba(226, 227, 230, 0.5);
+  width: 12rem;
+  height: 1.875rem;
+  cursor: pointer;
+}
+
+.dropdown > span {
+  color: var(--gray-500);
+  font-family: Inter;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 0.875rem;
+}
+
+.dropdown > img {
+  pointer-events: none;
+}

@@ -1,0 +1,76 @@
+:root {
+  --gray-50: #f9fafb;
+  --gray-200: #eaecf0;
+  --gray-300: #d0d5dd;
+  --gray-500: #5c6578;
+  --gray-700: #344054;
+  --gray-900: #101828;
+
+  --primary-color: #0a1734;
+
+  --color-active: #0a1734;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  max-width: 100%;
+  font-family: in;
+}
+
+button {
+  border: 0;
+  background-color: inherit;
+}
+
+.inter-normal {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.inter-medium {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.inter-bold {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.text-gray-700 {
+  color: #344054;
+}
+
+.primary-button {
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--gray-300);
+  background-color: white;
+  color: var(--primary-color);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.88rem;
+  max-height: 2.25rem;
+  cursor: pointer;
+}
+
+button.active {
+  color: var(--color-active) !important;
+  background-color: var(--gray-50) !important;
+}
