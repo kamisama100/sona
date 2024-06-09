@@ -1,41 +1,197 @@
 .datepicker-container {
+  display: none;
   background-color: white;
-  width: 800px;
-  height: 400px;
+  width: fit-content;
+  height: auto;
+  max-height: 28rem;
   position: absolute;
   z-index: 5;
-  display: flex;
   border: 1px solid var(--gray-200);
+  border-radius: 0.5rem;
 }
 
 .datepicker-container > div:first-child {
-  padding: 0.75rem 1rem;
   overflow-y: auto;
+  margin: 0.75rem 0.25rem 0.75rem 0rem;
 }
 
-.datepicker-container div:first-child div {
+.datepicker-container > div:first-child > div {
+  padding: 0 1rem;
+}
+
+.datepicker-container > div:first-child > div > div {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-.datepicker-container div:first-child div > button:first-child {
-  background-color: #8390d6;
-  border-radius: 0.375rem;
-}
-
-.datepicker-container div:first-child div > button {
+.datepicker-container > div:first-child > div > div > button {
   text-align: left;
   padding: 0 1rem;
   height: 2.5rem;
   width: 10rem;
+  font-family: inherit;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.25rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
 }
 
-.datepicker-container .start-date img {
-  width: 2.25rem;
-  height: 2.25rem;
+.datepicker-container > div:first-child div > div > button:hover {
+  background-color: #8390d6;
+  color: white;
+}
+
+.datepicker-container > div:first-child > div > div > button:first-child {
+  background-color: #8390d6;
+  color: white;
+}
+
+.datepicker-container > div:last-child > div:first-child {
+  display: flex;
+  flex-direction: row;
+}
+
+.datepicker-container .start-date,
+.datepicker-container .end-date {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  max-width: 278px;
+}
+
+.datepicker-container .start-date {
+  border-right: 1px solid var(--gray-200);
+  border-left: 1px solid var(--gray-200);
+}
+
+.datepicker-container .start-date > div:first-child > span,
+.datepicker-container .end-date > div:first-child > span {
+  font-weight: 600;
+  font-size: 1rem;
+  font-style: normal;
+  line-height: 1.5rem;
+  color: var(--gray-700);
+}
+
+.datepicker-container .start-date img,
+.datepicker-container .end-date img {
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0.5rem;
+}
+
+.datepicker-container .start-date > div:first-child,
+.datepicker-container .end-date > div:first-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.datepicker-container .start-date > div:last-child > div,
+.datepicker-container .end-date > div:last-child > div {
+  display: flex;
+  flex-direction: row;
+}
+
+.datepicker-container .start-date > div:last-child > div:last-child {
+  flex-wrap: wrap;
+}
+
+.datepicker-container .start-date > div:last-child > div:last-child button {
+  color: var(--gray-700);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  width: 39.65px;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.datepicker-container .start-date > div:last-child > div span,
+.datepicker-container .end-date > div:last-child > div span {
+  color: var(--gray-700);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.datepicker-container > div:last-child > div:last-child {
+  border-top: 1px solid var(--gray-200);
+  border-left: 1px solid var(--gray-200);
+  padding: 16px;
+}
+
+.datepicker-container > div:last-child > div:last-child > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.datepicker-container > div:last-child > div:last-child > div > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.datepicker-container > div:last-child > div:last-child > div > div:first-child {
+  gap: 1rem;
+}
+
+.datepicker-container > div:last-child > div:last-child > div div:first-child input,
+.datepicker-container > div:last-child > div:last-child > div div:first-child span {
+  font-family: inherit;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem;
+  color: var(--gray-500);
+}
+
+.datepicker-container > div:last-child > div:last-child > div div:first-child input {
+  border: 1px solid var(--gray-300);
+  border-radius: 0.5rem;
+  padding: 0 0.75rem;
+  height: 2.75rem;
+  max-height: 42px;
+  width: 100%;
+  max-width: 7rem;
+  color: var(--gray-900);
+}
+
+.datepicker-container > div:last-child > div:last-child > div > div:last-child {
+  gap: 0.75rem;
+}
+
+.datepicker-container > div:last-child > div:last-child > div > div:last-child > button {
+  text-align: center;
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 5rem;
+  height: 2.5rem;
+  max-height: 2.5rem;
+  font-family: inherit;
+  border-radius: 0.5rem;
+}
+
+.datepicker-container > div:last-child > div:last-child > div > div:last-child > button:last-child {
+  color: white;
+  background-color: var(--blue-400);
+  max-width: 4.5rem;
 }

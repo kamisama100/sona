@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import "../styles/Table.css"
 import arrowLeft from "../assets/images/arrow-left.svg"
 import arrowRight from "../assets/images/arrow-right.svg"
@@ -6,17 +6,33 @@ import dropdownArrow from "../assets/images/dropdown-arrow.svg"
 import DatePicker from "./DatePicker"
 
 function Table() {
+  const [toggle, setToggle] = useState("none")
+  const [data, setData] = useState([])
+
+  function toggleDatePicker() {
+    setToggle((prevToggle) => (prevToggle === "none" ? "flex" : "none"))
+  }
+
+  useEffect(() => {
+    fetch("https://run.mocky.io/v3/a403d680-7912-4ba8-9e0c-115c470df0af")
+      .then((res) => res.json())
+      .then((data) => setData(data))
+      .catch((er) => console.error("Error", er))
+  }, [])
+
   return (
     <div className="table-container">
       <table>
         <thead>
           <tr>
-            <th colspan="2">Data</th>
-            <th colspan="3">
+            <th colSpan="2">Data</th>
+            <th colSpan="3">
               <div className="dropdown">
-                <span>Customer Date</span>
-                <img src={dropdownArrow} alt="dropdown" />
-                <DatePicker right={"0px"} top={"34px"} />
+                <button onClick={toggleDatePicker}>
+                  <span>Customer Date</span>
+                  <img src={dropdownArrow} alt="dropdown" />
+                </button>
+                <DatePicker right={"0px"} top={"2.5rem"} display={toggle} />
               </div>
             </th>
           </tr>
@@ -29,176 +45,15 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <span>olivia@untitledui.com</span>
-            </td>
-            <td>
-              <span>Olivia</span>
-            </td>
-            <td>
-              <span>Garcia</span>
-            </td>
-            <td>
-              <span>03/11/2024</span>
-            </td>
-            <td>
-              <span>03/02/2024</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>phoenix@untitledui.com</span>
-            </td>
-            <td>
-              <span>Phoenix</span>
-            </td>
-            <td>
-              <span>Baker</span>
-            </td>
-            <td>
-              <span>01/20/2024</span>
-            </td>
-            <td>
-              <span>04/02/2024</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>lana@untitledui.com</span>
-            </td>
-            <td>
-              <span>Lana</span>
-            </td>
-            <td>
-              <span>Steiner</span>
-            </td>
-            <td>
-              <span>02/15/2024</span>
-            </td>
-            <td>
-              <span>01/02/2024</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>demi@untitledui.com</span>
-            </td>
-            <td>
-              <span>Demi</span>
-            </td>
-            <td>
-              <span>Roamer</span>
-            </td>
-            <td>
-              <span>01/16/2024</span>
-            </td>
-            <td>
-              <span>02/02/2024</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>candice@untitledui.com</span>
-            </td>
-            <td>
-              <span>Candice</span>
-            </td>
-            <td>
-              <span>Xu</span>
-            </td>
-            <td>
-              <span>03/29/2024</span>
-            </td>
-            <td>
-              <span>03/15/2024</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>natali@untitledui.com</span>
-            </td>
-            <td>
-              <span>Natali</span>
-            </td>
-            <td>
-              <span>David</span>
-            </td>
-            <td>
-              <span>02/11/2024</span>
-            </td>
-            <td>
-              <span>04/15/2024</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>drew@untitledui.com</span>
-            </td>
-            <td>
-              <span>Drew</span>
-            </td>
-            <td>
-              <span>Addison</span>
-            </td>
-            <td>
-              <span>03/02/2024</span>
-            </td>
-            <td>
-              <span>02/15/2024</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>orlando@untitledui.com</span>
-            </td>
-            <td>
-              <span>Orlando</span>
-            </td>
-            <td>
-              <span>Rodrigo</span>
-            </td>
-            <td>
-              <span>03/10/2024</span>
-            </td>
-            <td>
-              <span>01/15/2024</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>andi@untitledui.com</span>
-            </td>
-            <td>
-              <span>Andi</span>
-            </td>
-            <td>
-              <span>Atkinson</span>
-            </td>
-            <td>
-              <span>04/08/2024</span>
-            </td>
-            <td>
-              <span>03/25/2024</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span>kate@untitledui.com</span>
-            </td>
-            <td>
-              <span>Kate</span>
-            </td>
-            <td>
-              <span>Launder</span>
-            </td>
-            <td>
-              <span>04/20/2024</span>
-            </td>
-            <td>
-              <span>03/25/2024</span>
-            </td>
-          </tr>
+          {data.map((item, index) => (
+            <tr key={index}>
+              <td>{item.email}</td>
+              <td>{item.firstName}</td>
+              <td>{item.lastName}</td>
+              <td>{item.customerDate}</td>
+              <td>{item.leadDate}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <div className="pagination">
@@ -206,7 +61,7 @@ function Table() {
           <img src={arrowLeft} alt="Previous" />
           <span>Previous</span>
         </button>
-        <div colspan="3" align="center">
+        <div colSpan="3" align="center">
           <button className="active">1</button>
           <button>2</button>
           <button>3</button>

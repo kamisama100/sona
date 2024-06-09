@@ -8,7 +8,7 @@
   justify-content: space-between;
 }
 
-table {
+.table-container table {
   width: 100%;
   height: auto;
   background-color: white;
@@ -16,31 +16,31 @@ table {
   overflow: auto;
 }
 
-table thead > tr {
+.table-container table thead > tr {
   display: flex;
 }
-table thead > tr:first-child {
+.table-container table thead > tr:first-child {
   justify-content: space-between;
   align-items: center;
 }
 
-table thead tr:first-child th:first-child,
-table thead tr:first-child th:last-child {
+.table-container table thead tr:first-child th:first-child,
+.table-container table thead tr:first-child th:last-child {
   padding: 1.25rem 1.5rem;
 }
 
-table thead tr:first-child th:first-child {
+.table-container table thead tr:first-child th:first-child {
   text-align: left;
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 600;
   line-height: 1.75rem;
 }
-table thead tr:first-child th:last-child div {
+.table-container table thead tr:first-child th:last-child div {
   text-align: right;
 }
 
-table thead tr:last-child th {
+.table-container table thead tr:last-child th {
   padding: 0.75rem 1.5rem;
   background-color: var(--gray-50);
   border-top: 1px solid var(--gray-200);
@@ -54,16 +54,16 @@ table thead tr:last-child th {
   line-height: 1.125rem;
 }
 
-table tbody {
+.table-container table tbody {
   display: block;
   overflow-y: auto;
   height: 68.5vh;
 }
-table tbody tr {
+.table-container table tbody tr {
   display: flex;
 }
 
-table tbody tr td {
+.table-container table tbody tr td {
   padding: 1rem 1.5rem;
   color: var(--primary-color);
   font-size: 0.875rem;
@@ -75,7 +75,7 @@ table tbody tr td {
   text-overflow: ellipsis;
 }
 
-.pagination {
+.table-container .pagination {
   display: flex;
   padding: 0 1rem;
   min-height: 4.25rem;
@@ -85,13 +85,13 @@ table tbody tr td {
   border-top: 1px solid var(--gray-200);
 }
 
-.pagination > div {
+.table-container .pagination > div {
   display: flex;
   flex-direction: row;
   gap: 0.14rem;
 }
 
-.pagination > div button {
+.table-container .pagination > div button {
   width: 2.5rem;
   height: 2.5rem;
   cursor: pointer;
@@ -105,8 +105,11 @@ table tbody tr td {
   color: var(--gray-500);
 }
 
-.dropdown {
+.table-container .dropdown {
   position: relative;
+}
+
+.table-container .dropdown > button:first-child {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -119,7 +122,7 @@ table tbody tr td {
   cursor: pointer;
 }
 
-.dropdown > span {
+.table-container .dropdown button:first-child > span {
   color: var(--gray-500);
   font-family: Inter;
   font-size: 0.75rem;
@@ -128,6 +131,6 @@ table tbody tr td {
   line-height: 0.875rem;
 }
 
-.dropdown > img {
+.table-container .dropdown > img {
   pointer-events: none;
 }
