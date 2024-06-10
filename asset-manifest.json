@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/sona/static/css/main.ca939ec6.css",
+    "main.js": "/sona/static/js/main.5e493052.js",
+    "static/js/453.69748877.chunk.js": "/sona/static/js/453.69748877.chunk.js",
+    "static/media/dropdown-arrow.svg": "/sona/static/media/dropdown-arrow.29e2044b4a6b1b2df71b45854d62fed4.svg",
+    "index.html": "/sona/index.html",
+    "static/media/arrow-right.svg": "/sona/static/media/arrow-right.109bb92648a1a3db67396bee9e90d4a2.svg",
+    "static/media/arrow-left.svg": "/sona/static/media/arrow-left.094b2cc28f7ad258a92585c55fae46ba.svg",
+    "static/media/arrow-left-no-tail.svg": "/sona/static/media/arrow-left-no-tail.90bc6938efcb67fad12554ec907cfa00.svg",
+    "static/media/arrow-right-no-tail.svg": "/sona/static/media/arrow-right-no-tail.c44b6bb1b78caee2059649fa3102fa79.svg",
+    "main.ca939ec6.css.map": "/sona/static/css/main.ca939ec6.css.map",
+    "main.5e493052.js.map": "/sona/static/js/main.5e493052.js.map",
+    "453.69748877.chunk.js.map": "/sona/static/js/453.69748877.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ca939ec6.css",
+    "static/js/main.5e493052.js"
+  ]
+}

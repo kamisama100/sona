@@ -1,0 +1,18 @@
+<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="form-dropdown-arrows">
+<g id="Combined Shape" filter="url(#filter0_i_1_4376)">
+<path d="M5.77656 4.56966C6.17112 4.20777 6.77693 4.20783 7.17143 4.56978C7.61705 4.97863 7.61705 5.68135 7.17143 6.09021L4 8.99999L0.828571 6.09021C0.382952 5.68135 0.382952 4.97863 0.828571 4.56978C1.22307 4.20783 1.82888 4.20777 2.22344 4.56966L4 6.1991L5.77656 4.56966Z" fill="#8F95A4"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_i_1_4376" x="0.494385" y="4.29828" width="7.01123" height="4.70172" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_1_4376"/>
+</filter>
+</defs>
+</svg>
