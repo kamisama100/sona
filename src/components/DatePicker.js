@@ -1,9 +1,18 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import "../styles/DatePicker.css"
 import arrowLeft from "../assets/images/arrow-left-no-tail.svg"
 import arrowRight from "../assets/images/arrow-right-no-tail.svg"
+import GenerateCalendar from "../utils/GenerateCalendar"
 
-function YearButtons({ yearStart }) {
+const YearButtons = ({ yearStart, setCustomerSelectedYear, setLeadSelectedYear }) => {
+  const [activeYear, setActiveYear] = useState(2024)
+
+  const handleClick = (year) => {
+    setCustomerSelectedYear(year)
+    setLeadSelectedYear(year)
+    setActiveYear(year)
+  }
+
   const years = []
   for (let year = 2024; year >= yearStart; year--) {
     years.push(year)
@@ -12,39 +21,132 @@ function YearButtons({ yearStart }) {
   return (
     <div>
       {years.map((year) => (
-        <button key={year}>{year}</button>
+        <button
+          key={year}
+          onClick={() => handleClick(year)}
+          className={activeYear === year ? "active" : ""}
+        >
+          {year}
+        </button>
       ))}
     </div>
   )
 }
 
-function DatePicker({ right, top, display }) {
+function DatePicker({ right, top, display, filterDate, onClose }) {
   const datePickerRef = useRef(null)
+
+  const customerDateInput = useRef(null)
+  const [customerSelectedYear, setCustomerSelectedYear] = useState(2024)
+  const [customerMonth, setCustomerMonth] = useState("January")
+  const [customerSelectedDay, setCustomerSelectedDay] = useState(0)
+  const customerCalendar = GenerateCalendar(customerSelectedYear)
+
+  const leadDateInput = useRef(null)
+  const [leadSelectedYear, setLeadSelectedYear] = useState(2024)
+  const [leadMonth, setLeadMonth] = useState("January")
+  const [leadSelectedDay, setLeadSelectedDay] = useState(0)
+  const leadCalendar = GenerateCalendar(leadSelectedYear)
 
   const datePickerStyle = {
     right: right || 0,
     top: top || 0,
-    display: display || "none",
+    display: display ? "flex" : "none",
   }
 
-  function hideDatePicker() {
-    datePickerRef.current.style.display = "none"
+  const handleDatePickerClose = () => {
+    onClose()
+  }
+
+  const handlePrevMonthButtonClick = (calendarType) => {
+    if (calendarType === "customer") {
+      const currentMonthIndex = customerCalendar.findIndex((m) => m.month === customerMonth)
+      if (currentMonthIndex !== -1 && currentMonthIndex !== 0) {
+        setCustomerMonth(customerCalendar[currentMonthIndex - 1].month)
+      } else if (currentMonthIndex === 0 && customerSelectedYear !== 2012) {
+        setCustomerMonth(customerCalendar[11].month)
+        setCustomerSelectedYear(customerSelectedYear - 1)
+      }
+    } else if (calendarType === "lead") {
+      const currentMonthIndex = leadCalendar.findIndex((m) => m.month === leadMonth)
+      if (currentMonthIndex !== -1 && currentMonthIndex !== 0) {
+        setLeadMonth(leadCalendar[currentMonthIndex - 1].month)
+      } else if (currentMonthIndex === 0 && leadSelectedYear !== 2012) {
+        setLeadMonth(leadCalendar[11].month)
+        setLeadSelectedYear(leadSelectedYear - 1)
+      }
+    }
+  }
+
+  const handleNextMonthButtonClick = (calendarType) => {
+    if (calendarType === "customer") {
+      const currentMonthIndex = customerCalendar.findIndex((m) => m.month === customerMonth)
+      if (currentMonthIndex !== -1 && currentMonthIndex !== 11) {
+        setCustomerMonth(customerCalendar[currentMonthIndex + 1].month)
+      } else if (currentMonthIndex === 11 && customerSelectedYear !== 2024) {
+        setCustomerMonth(customerCalendar[0].month)
+        setCustomerSelectedYear(customerSelectedYear + 1)
+      }
+    } else if (calendarType === "lead") {
+      const currentMonthIndex = leadCalendar.findIndex((m) => m.month === leadMonth)
+      if (currentMonthIndex !== -1 && currentMonthIndex !== 11) {
+        setLeadMonth(leadCalendar[currentMonthIndex + 1].month)
+      } else if (currentMonthIndex === 11 && leadSelectedYear !== 2024) {
+        setLeadMonth(leadCalendar[0].month)
+        setLeadSelectedYear(leadSelectedYear + 1)
+      }
+    }
+  }
+
+  const handleSelectedDay = (day, calendarType) => {
+    if (calendarType === "customer") {
+      setCustomerSelectedDay(day)
+    } else if (calendarType === "lead") {
+      setLeadSelectedDay(day)
+    }
+  }
+
+  const handleApplyButton = (customerDate, leadDate) => {
+    if (new Date(customerDate) > new Date(leadDate)) {
+      alert("Customer date cannot be later than Lead date.")
+      return
+    }
+
+    filterDate([customerDate, leadDate])
+
+    handleDatePickerClose()
   }
 
   return (
     <div ref={datePickerRef} className="datepicker-container shadow-xs" style={datePickerStyle}>
       <div>
         <div>
-          <YearButtons yearStart={2012} />
+          <YearButtons
+            yearStart={2012}
+            setCustomerSelectedYear={setCustomerSelectedYear}
+            setLeadSelectedYear={setLeadSelectedYear}
+          />
         </div>
       </div>
       <div>
         <div>
-          <div className="start-date">
+          <div className="customer-date">
             <div>
-              <img src={arrowLeft} alt="arrow" />
-              <span>April 2024</span>
-              <img src={arrowRight} alt="arrow" />
+              <button
+                onClick={() => handlePrevMonthButtonClick("customer")}
+                className="cursor-pointer"
+              >
+                <img src={arrowLeft} alt="arrow" />
+              </button>
+              <span>
+                {customerMonth} {customerSelectedYear}
+              </span>
+              <button
+                onClick={() => handleNextMonthButtonClick("customer")}
+                className={`cursor-pointer`}
+              >
+                <img src={arrowRight} alt="arrow" />
+              </button>
             </div>
             <div>
               <div>
@@ -56,24 +158,50 @@ function DatePicker({ right, top, display }) {
                 <span className="font-medium">Sat</span>
                 <span className="font-medium">Su</span>
               </div>
-              <div>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>6</button>
-                <button>7</button>
-                <button>8</button>
-                <button>9</button>
-              </div>
+              {customerCalendar.map((item) => {
+                if (item.month === customerMonth) {
+                  return (
+                    <div key={item.month}>
+                      {item.previousMonthDays.map((day, index) => (
+                        <button className="disabled" key={index}>
+                          {day}
+                        </button>
+                      ))}
+                      {item.days.map((day, index) => (
+                        <button
+                          className={customerSelectedDay === day ? "selected" : ""}
+                          onClick={() => handleSelectedDay(day, "customer")}
+                          key={index}
+                        >
+                          {day}
+                        </button>
+                      ))}
+                      {item.nextMonthDays.map((day, index) => (
+                        <button className="disabled" key={index}>
+                          {day}
+                        </button>
+                      ))}
+                    </div>
+                  )
+                }
+                return null
+              })}
             </div>
           </div>
-          <div className="end-date">
+          <div className="lead-date">
             <div>
-              <img src={arrowLeft} alt="arrow" />
-              <span>May 2024</span>
-              <img src={arrowRight} alt="arrow" />
+              <button onClick={() => handlePrevMonthButtonClick("lead")} className="cursor-pointer">
+                <img src={arrowLeft} alt="arrow" />
+              </button>
+              <span>
+                {leadMonth} {leadSelectedYear}
+              </span>
+              <button
+                onClick={() => handleNextMonthButtonClick("lead")}
+                className={`cursor-pointer`}
+              >
+                <img src={arrowRight} alt="arrow" />
+              </button>
             </div>
             <div>
               <div>
@@ -85,75 +213,76 @@ function DatePicker({ right, top, display }) {
                 <span className="font-medium">Sat</span>
                 <span className="font-medium">Su</span>
               </div>
-              <div>
-                <span className="disabled">26</span>
-                <span className="disabled">27</span>
-                <span className="disabled">28</span>
-                <span className="disabled">29</span>
-                <span className="disabled">30</span>
-                <span className="disabled">31</span>
-                <span>1</span>
-              </div>
-              <div>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5</span>
-                <span>6</span>
-                <span>7</span>
-                <span>8</span>
-              </div>
-              <div>
-                <span>9</span>
-                <span>10</span>
-                <span>11</span>
-                <span>12</span>
-                <span>13</span>
-                <span>14</span>
-                <span>15</span>
-              </div>
-              <div>
-                <span>16</span>
-                <span>17</span>
-                <span>18</span>
-                <span>19</span>
-                <span>20</span>
-                <span>21</span>
-                <span>22</span>
-              </div>
-              <div>
-                <span>23</span>
-                <span>24</span>
-                <span>25</span>
-                <span>26</span>
-                <span>27</span>
-                <span>28</span>
-                <span>29</span>
-              </div>
-              <div>
-                <span>30</span>
-                <span>31</span>
-                <span className="disabled">1</span>
-                <span className="disabled">2</span>
-                <span className="disabled">3</span>
-                <span className="disabled">4</span>
-                <span className="disabled">5</span>
-              </div>
+              {leadCalendar.map((item) => {
+                if (item.month === leadMonth) {
+                  return (
+                    <div key={item.month}>
+                      {item.previousMonthDays.map((day, index) => (
+                        <button className="disabled" key={index}>
+                          {day}
+                        </button>
+                      ))}
+                      {item.days.map((day, index) => (
+                        <button
+                          onClick={() => handleSelectedDay(day, "lead")}
+                          key={index}
+                          className={leadSelectedDay === day ? "selected" : ""}
+                        >
+                          {day}
+                        </button>
+                      ))}
+                      {item.nextMonthDays.map((day, index) => (
+                        <button className="disabled" key={index}>
+                          {day}
+                        </button>
+                      ))}
+                    </div>
+                  )
+                }
+                return null
+              })}
             </div>
           </div>
         </div>
         <div>
           <div>
             <div>
-              <input type="text" className="shadow-xs" placeholder="Start Date" />
+              <input
+                ref={customerDateInput}
+                type="text"
+                className="shadow-xs"
+                placeholder="Customer Date"
+                value={`${customerMonth.substring(
+                  0,
+                  3
+                )} ${customerSelectedDay}, ${customerSelectedYear}`}
+                readOnly
+              />
               <span>-</span>
-              <input type="text" className="shadow-xs" placeholder="End Date" />
+              <input
+                ref={leadDateInput}
+                type="text"
+                className="shadow-xs"
+                placeholder="Lead Date"
+                value={`${leadMonth.substring(0, 3)} ${leadSelectedDay}, ${leadSelectedYear}`}
+                readOnly
+              />
             </div>
             <div>
-              <button onClick={hideDatePicker} className="primary-button text-sm">
+              <button onClick={handleDatePickerClose} className="primary-button text-sm">
                 Cancel
               </button>
-              <button className="primary-button text-sm">Apply</button>
+              <button
+                onClick={() =>
+                  handleApplyButton(
+                    `${customerMonth} ${customerSelectedDay}, ${customerSelectedYear}`,
+                    `${leadMonth} ${leadSelectedDay}, ${leadSelectedYear}`
+                  )
+                }
+                className="primary-button text-sm"
+              >
+                Apply
+              </button>
             </div>
           </div>
         </div>

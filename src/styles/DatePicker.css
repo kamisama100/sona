@@ -16,7 +16,7 @@
 }
 
 .datepicker-container > div:first-child > div {
-  padding: 0 1rem;
+  padding: 0 0.5rem 0 1rem;
 }
 
 .datepicker-container > div:first-child > div > div {
@@ -44,9 +44,9 @@
   color: white;
 }
 
-.datepicker-container > div:first-child > div > div > button:first-child {
-  background-color: #8390d6;
-  color: white;
+.datepicker-container > div:first-child div > button.active {
+  background-color: #8390d6 !important;
+  color: white !important;
 }
 
 .datepicker-container > div:last-child > div:first-child {
@@ -54,8 +54,8 @@
   flex-direction: row;
 }
 
-.datepicker-container .start-date,
-.datepicker-container .end-date {
+.datepicker-container .customer-date,
+.datepicker-container .lead-date {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -63,13 +63,13 @@
   max-width: 278px;
 }
 
-.datepicker-container .start-date {
+.datepicker-container .customer-date {
   border-right: 1px solid var(--gray-200);
   border-left: 1px solid var(--gray-200);
 }
 
-.datepicker-container .start-date > div:first-child > span,
-.datepicker-container .end-date > div:first-child > span {
+.datepicker-container .customer-date > div:first-child > span,
+.datepicker-container .lead-date > div:first-child > span {
   font-weight: 600;
   font-size: 1rem;
   font-style: normal;
@@ -77,32 +77,34 @@
   color: var(--gray-700);
 }
 
-.datepicker-container .start-date img,
-.datepicker-container .end-date img {
+.datepicker-container .customer-date img,
+.datepicker-container .lead-date img {
   width: 1.25rem;
   height: 1.25rem;
   padding: 0.5rem;
 }
 
-.datepicker-container .start-date > div:first-child,
-.datepicker-container .end-date > div:first-child {
+.datepicker-container .customer-date > div:first-child,
+.datepicker-container .lead-date > div:first-child {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.datepicker-container .start-date > div:last-child > div,
-.datepicker-container .end-date > div:last-child > div {
+.datepicker-container .customer-date > div:last-child > div,
+.datepicker-container .lead-date > div:last-child > div {
   display: flex;
   flex-direction: row;
 }
 
-.datepicker-container .start-date > div:last-child > div:last-child {
+.datepicker-container .customer-date > div:last-child > div:last-child,
+.datepicker-container .lead-date > div:last-child > div:last-child {
   flex-wrap: wrap;
 }
 
-.datepicker-container .start-date > div:last-child > div:last-child button {
+.datepicker-container .customer-date > div:last-child > div:last-child button,
+.datepicker-container .lead-date > div:last-child > div:last-child button {
   color: var(--gray-700);
   font-family: inherit;
   font-size: 0.875rem;
@@ -111,13 +113,31 @@
   line-height: 1.25rem;
   width: 39.65px;
   height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  border-radius: 1.25rem;
+  cursor: pointer;
 }
 
-.datepicker-container .start-date > div:last-child > div span,
-.datepicker-container .end-date > div:last-child > div span {
+.datepicker-container .customer-date > div:last-child > div:last-child button:hover,
+.datepicker-container .lead-date > div:last-child > div:last-child button:hover {
+  background-color: var(--gray-50);
+  color: black;
+}
+
+.datepicker-container .customer-date > div:last-child > div:last-child button.selected,
+.datepicker-container .lead-date > div:last-child > div:last-child button.selected {
+  background-color: var(--pink);
+  color: white;
+}
+
+.datepicker-container .customer-date > div:last-child > div:last-child button.disabled,
+.datepicker-container .lead-date > div:last-child > div:last-child button.disabled {
+  pointer-events: none;
+  color: #667085;
+}
+
+.datepicker-container .customer-date > div:last-child > div span,
+.datepicker-container .lead-date > div:last-child > div span {
   color: var(--gray-700);
   font-size: 0.875rem;
   font-style: normal;
