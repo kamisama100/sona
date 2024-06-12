@@ -1,28 +1,13 @@
 const FormatDate = (inputDate) => {
-  const months = {
-    January: "01",
-    February: "02",
-    March: "03",
-    April: "04",
-    May: "05",
-    June: "06",
-    July: "07",
-    August: "08",
-    September: "09",
-    October: "10",
-    November: "11",
-    December: "12",
-  }
+  const cleanedDate = inputDate.replace(/,/g, "")
 
-  const [monthDay, year] = inputDate.split(",").map((item) => item.trim())
+  const [month, day, year] = cleanedDate.split(" ")
 
-  const [month, day] = monthDay.split(" ")
+  const monthNumber = new Date(Date.parse(`${month} 1, 2022`)).getMonth() + 1
 
-  const monthNumber = months[month]
+  const paddedDay = day.padStart(2, "0")
 
-  const paddedDay = day.length === 1 ? `0${day}` : day
-
-  return `${monthNumber}/${paddedDay}/${year}`
+  return `${year}-${monthNumber}-${paddedDay}`
 }
 
 export default FormatDate

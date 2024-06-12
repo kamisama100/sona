@@ -1,15 +1,24 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import "../styles/DatePicker.css"
 import arrowLeft from "../assets/images/arrow-left-no-tail.svg"
 import arrowRight from "../assets/images/arrow-right-no-tail.svg"
 import GenerateCalendar from "../utils/GenerateCalendar"
 
-const YearButtons = ({ yearStart, setCustomerSelectedYear, setLeadSelectedYear }) => {
-  const [activeYear, setActiveYear] = useState(2024)
+const YearButtons = ({
+  yearStart,
+  setCustomerSelectedYear,
+  setLeadSelectedYear,
+  dayClicked,
+  yearActive,
+}) => {
+  const [activeYear, setActiveYear] = useState(yearActive)
+
+  useEffect(() => {
+    setActiveYear(yearActive)
+  }, [yearActive])
 
   const handleClick = (year) => {
-    setCustomerSelectedYear(year)
-    setLeadSelectedYear(year)
+    dayClicked ? setCustomerSelectedYear(year) : setLeadSelectedYear(year)
     setActiveYear(year)
   }
 
@@ -33,19 +42,21 @@ const YearButtons = ({ yearStart, setCustomerSelectedYear, setLeadSelectedYear }
   )
 }
 
-function DatePicker({ right, top, display, filterDate, onClose }) {
+const DatePicker = ({ right, top, display, filterDate, onClose }) => {
   const datePickerRef = useRef(null)
+  const [dayClicked, setDayClicked] = useState(true)
+  const [yearActive, setYearActive] = useState(2024)
 
   const customerDateInput = useRef(null)
   const [customerSelectedYear, setCustomerSelectedYear] = useState(2024)
   const [customerMonth, setCustomerMonth] = useState("January")
-  const [customerSelectedDay, setCustomerSelectedDay] = useState(0)
+  const [customerSelectedDay, setCustomerSelectedDay] = useState(1)
   const customerCalendar = GenerateCalendar(customerSelectedYear)
 
   const leadDateInput = useRef(null)
   const [leadSelectedYear, setLeadSelectedYear] = useState(2024)
   const [leadMonth, setLeadMonth] = useState("January")
-  const [leadSelectedDay, setLeadSelectedDay] = useState(0)
+  const [leadSelectedDay, setLeadSelectedDay] = useState(1)
   const leadCalendar = GenerateCalendar(leadSelectedYear)
 
   const datePickerStyle = {
@@ -101,8 +112,10 @@ function DatePicker({ right, top, display, filterDate, onClose }) {
   const handleSelectedDay = (day, calendarType) => {
     if (calendarType === "customer") {
       setCustomerSelectedDay(day)
+      handleDayClick("customer")
     } else if (calendarType === "lead") {
       setLeadSelectedDay(day)
+      handleDayClick("lead")
     }
   }
 
@@ -117,14 +130,28 @@ function DatePicker({ right, top, display, filterDate, onClose }) {
     handleDatePickerClose()
   }
 
+  const handleDayClick = (calendarType) => {
+    if (calendarType === "customer") {
+      setDayClicked(true)
+      setYearActive(customerSelectedYear)
+    } else if (calendarType === "lead") {
+      setDayClicked(false)
+      setYearActive(leadSelectedYear)
+    }
+  }
+
+  useEffect(() => {}, [dayClicked])
+
   return (
     <div ref={datePickerRef} className="datepicker-container shadow-xs" style={datePickerStyle}>
       <div>
         <div>
           <YearButtons
-            yearStart={2012}
+            yearStart={2010}
             setCustomerSelectedYear={setCustomerSelectedYear}
             setLeadSelectedYear={setLeadSelectedYear}
+            dayClicked={dayClicked}
+            yearActive={yearActive}
           />
         </div>
       </div>

@@ -7,50 +7,51 @@ import DatePicker from "./DatePicker"
 import formatDate from "../utils/FormatDate"
 import PaginationComponent from "../utils/Pagination"
 
-function Table() {
+const Table = () => {
   const [toggle, setToggle] = useState(false)
   const dropdownRef = useRef(null)
+  const dropdownImgRef = useRef(null)
 
   const [data, setData] = useState([])
-  const [filteredData, setFilteredData] = useState([])
-
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
 
+  const [startDate, setStartDate] = useState("2022-01-01")
+  const [endDate, setEndDate] = useState("2023-12-31")
+
   useEffect(() => {
-    fetch("https://run.mocky.io/v3/cab44c46-4972-49af-9bbd-f42c8fcf7ac9")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data)
-        setFilteredData(data)
-      })
-      .catch((error) => console.error("Error", error))
+    const fetchData = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:3001/api/data?startDate=${startDate}&endDate=${endDate}&limit=${itemsPerPage}&page=${currentPage}`
+        )
+        const responseData = await res.json()
+        setData(responseData)
+      } catch (error) {
+        console.error("Error", error)
+      }
+    }
+
+    fetchData()
+  }, [currentPage, startDate, endDate])
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
   }, [])
 
   const handleFilterChange = (dates) => {
-    const formattedDate = dates.map(formatDate)
-    const [startDate, endDate] = formattedDate.map((dateString) => {
-      const [month, day, year] = dateString.split("/")
-      return new Date(`${year}-${month}-${day}`)
-    })
-
-    const filtered = data.filter((item) => {
-      const customerDate = new Date(item.customerDate)
-      const leadDate = new Date(item.leadDate)
-
-      return (
-        customerDate >= startDate &&
-        customerDate <= endDate &&
-        leadDate >= startDate &&
-        leadDate <= endDate
-      )
-    })
-
-    setFilteredData(filtered)
+    setStartDate(formatDate(dates[0]))
+    setEndDate(formatDate(dates[1]))
   }
 
   const toggleDatePicker = () => {
-    setToggle(!toggle)
+    const newToggle = !toggle
+    setToggle(newToggle)
+
+    dropdownImgRef.current.style.transform = newToggle ? "rotate(180deg)" : "rotate(0deg)"
   }
 
   const handleDatePickerClose = () => {
@@ -63,23 +64,16 @@ function Table() {
     }
   }
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
-
   const onPageChange = (page) => {
     setCurrentPage(page)
   }
 
   const renderTableRows = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    const currentItems = filteredData.slice(startIndex, endIndex)
+    if (!data || !data.data) {
+      return null
+    }
 
-    return currentItems.map((item, index) => (
+    return data.data.map((item, index) => (
       <tr key={index}>
         <td>{item.email}</td>
         <td>{item.firstName}</td>
@@ -100,7 +94,7 @@ function Table() {
               <div className="dropdown" ref={dropdownRef}>
                 <button onClick={toggleDatePicker}>
                   <span>Customer Date</span>
-                  <img src={dropdownArrow} alt="dropdown" />
+                  <img ref={dropdownImgRef} src={dropdownArrow} alt="dropdown" />
                 </button>
                 <DatePicker
                   right={"0px"}
@@ -123,7 +117,7 @@ function Table() {
         <tbody>{renderTableRows()}</tbody>
       </table>
       <PaginationComponent
-        totalCount={filteredData.length}
+        totalCount={data.totalItems}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         onPageChange={onPageChange}
